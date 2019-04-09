@@ -1,0 +1,23 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
+import numpy as np
+
+df = pd.read_excel (r'rot_data2.xlsx') 
+rot = pd.DataFrame(df, columns= ['RoT [%]'])
+df['Diagnózis']=pd.DataFrame(df, columns= ['Diag'])
+#boxplot = df.boxplot(by=['diag'])
+fig=sns.boxplot(x=df['Diagnózis'],y=df['RoT [%]'])
+# palette='Blues'
+fig.set_title('RoT értékek diagnózisonként')
+fig.yaxis.set_major_locator(ticker.MultipleLocator(5))
+medians = df.groupby(['Diagnózis'] )['RoT [%]'].median().values
+median_labels = [str(np.round(s, 2)) for s in medians]
+
+pos = range(len(medians))
+for tick,label in zip(pos,fig.get_xticklabels(), ):
+    fig.text(pos[tick], medians[tick] + 0.5, median_labels[tick], 
+            horizontalalignment='center', size='x-small', color='w', weight='semibold')
+
+plt.savefig('Boxplot.png', dpi=150)
