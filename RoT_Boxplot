@@ -8,11 +8,12 @@ df = pd.read_excel (r'rot_data2.xlsx')
 rot = pd.DataFrame(df, columns= ['RoT [%]'])
 df['Diagnózis']=pd.DataFrame(df, columns= ['Diag'])
 #boxplot = df.boxplot(by=['diag'])
+sns.set(style="whitegrid")
 fig=sns.boxplot(x=df['Diagnózis'],y=df['RoT [%]'])
 # palette='Blues'
 fig.set_title('RoT értékek diagnózisonként')
 fig.yaxis.set_major_locator(ticker.MultipleLocator(5))
-medians = df.groupby(['Diagnózis'] )['RoT [%]'].median().values
+medians = df.groupby(['num'] )['RoT [%]'].median().values
 median_labels = [str(np.round(s, 2)) for s in medians]
 
 pos = range(len(medians))
