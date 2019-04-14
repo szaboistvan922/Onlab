@@ -1,0 +1,19 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+
+df = pd.read_excel (r'rot_data2.xlsx', index_col=0) 
+rot = pd.DataFrame(df, columns= ['RoT [%]'])
+df['Diagnózis']=pd.DataFrame(df, columns= ['Diag'])
+hc=df.loc[:'HC_H033_F_01ffi',['RoT [%]']]
+pa=df.loc['PA_003no':'PA_534no',['RoT [%]']]
+fd=df.loc['FD_013no':'FD_531no',['RoT [%]']]
+od=df.loc['OD_003no':'OD_534no',['RoT [%]']]
+rp=df.loc['RP_003no':'RP_526no',['RoT [%]']]
+sns.set(style="whitegrid")
+
+sns.barplot(x="Diagnózis",y='RoT [%]',data=df, ci="sd", capsize=.15)
+plt.title('RoT értékek átlaga és szórása')
+
+plt.savefig('Mean_dev.png', dpi=150)
