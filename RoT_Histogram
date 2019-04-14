@@ -11,12 +11,15 @@ pa=df.loc['PA_003no':'PA_534no',['RoT [%]']]
 fd=df.loc['FD_013no':'FD_531no',['RoT [%]']]
 od=df.loc['OD_003no':'OD_534no',['RoT [%]']]
 rp=df.loc['RP_003no':'RP_526no',['RoT [%]']]
-plt.legend();
+sns.set(style="whitegrid")
 sns.distplot(hc,hist=0, kde=1, label="HC");
 sns.distplot(pa,hist=0, kde=1, label="PA");
 sns.distplot(fd,hist=0, kde=1, label="FD");
 sns.distplot(od,hist=0, kde=1, label="OD");
 sns.distplot(rp,hist=0, kde=1, label="RP");
+plt.legend();
+plt.title('RoT értékek sűrűségfüggvénye/hisztogramja')
+plt.xlabel('RoT [%]')
 #print(pa.std(),"PA");
 #print(fd.std(),"FD");
 #print(od.std(),"OD");
