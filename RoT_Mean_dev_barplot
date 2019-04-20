@@ -1,6 +1,7 @@
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 df = pd.read_excel (r'rot_data2.xlsx', index_col=0) 
@@ -13,7 +14,26 @@ od=df.loc['OD_003no':'OD_534no',['RoT [%]']]
 rp=df.loc['RP_003no':'RP_526no',['RoT [%]']]
 sns.set(style="whitegrid")
 
-sns.barplot(x="Diagnózis",y='RoT [%]',data=df, ci="sd", capsize=.15)
+fig=sns.barplot(x="Diagnózis",y='RoT [%]',data=df, ci="sd", capsize=.15)
 plt.title('RoT értékek átlaga és szórása')
 
-plt.savefig('Mean_dev.png', dpi=150)
+means = df.groupby(['num'] )['RoT [%]'].mean().values
+mean_labels = [str(np.round(s, 2)) for s in means]
+
+pos = range(len(means))
+for tick,label in zip(pos,fig.get_xticklabels(), ):
+    fig.text(pos[tick], means[tick] - 2, mean_labels[tick], 
+            horizontalalignment='center', size='medium', color='w', weight='semibold')
+    
+devs = df.groupby(['num'])['RoT [%]'].std().values
+dev_labels = [str(np.round(s, 2)) for s in devs]
+    
+pos = range(len(devs))
+for tick,label in zip(pos,fig.get_xticklabels(), ):
+    fig.text(pos[tick], means[tick] +devs[tick] + .5, dev_labels[tick], 
+            horizontalalignment='center', size='medium', color='black')
+
+plt.ylim(0, 39)
+
+
+plt.savefig('Mean_dev.png', dpi=100)
