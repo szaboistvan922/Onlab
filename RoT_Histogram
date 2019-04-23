@@ -20,6 +20,7 @@ sns.distplot(rp,hist=0, kde=1, label="RP");
 plt.legend();
 plt.title('RoT értékek sűrűségfüggvénye/hisztogramja')
 plt.xlabel('RoT [%]')
+plt.ylabel('Sűrűség')
 #print(pa.std(),"PA");
 #print(fd.std(),"FD");
 #print(od.std(),"OD");
